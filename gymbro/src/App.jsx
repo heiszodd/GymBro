@@ -32,8 +32,9 @@ const GLOBAL_CSS = `
     --transition-fast: 0.18s ease;
   }
 
-  html, body { height: 100%; overflow: hidden; }
-  body {
+  html, body {
+    height: 100%;
+    overflow: auto;
     background: var(--navy);
     color: var(--text);
     font-family: var(--font);
@@ -293,7 +294,7 @@ function StatBadge({ label, value, unit = "", color = "var(--green)", delay = 0 
 /* ─── HEADER ─── */
 function Header() {
   return (
-    <div style={{ padding: "24px 22px 0", background: "linear-gradient(180deg, var(--navy) 60%, transparent)", position: "sticky", top: 0, zIndex: 20 }}>
+    <div style={{ padding: "24px 22px 0", background: "linear-gradient(180deg, var(--navy) 60%, transparent)", position: "sticky", top: 0, zIndex: 20, backdropFilter: "blur(12px)" }}>
       <div className="fadeUp" style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
         <div style={{
           width: 36, height: 36, borderRadius: 12,
@@ -324,11 +325,15 @@ function TabBar({ active, onChange }) {
   ];
   return (
     <div style={{
-      position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)",
-      width: "100%", maxWidth: 480,
-      background: "rgba(11,22,40,0.92)", backdropFilter: "blur(24px)",
+      position: "sticky",
+      bottom: 0,
+      width: "100%",
+      background: "rgba(11,22,40,0.95)",
+      backdropFilter: "blur(24px)",
       borderTop: "1px solid var(--border)",
-      display: "flex", zIndex: 100, padding: "6px 8px 14px",
+      display: "flex",
+      zIndex: 100,
+      padding: "6px 8px 14px",
     }}>
       {tabs.map(t => {
         const isActive = active === t.id;
@@ -457,11 +462,7 @@ function BuildScreen({ onWorkoutCreated }) {
     try {
       const r = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: {
-  "Content-Type": "application/json",
-  "x-api-key": import.meta.env.VITE_ANTHROPIC_API_KEY,
-  "anthropic-version": "2023-06-01",
-},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, messages: [{ role: "user", content: prompt }] }),
       });
       const d = await r.json();
@@ -832,15 +833,17 @@ export default function GymBro() {
       <div style={{ position: "fixed", top: -120, left: -80,  width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(29,179,126,0.08) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
       <div style={{ position: "fixed", bottom: -100, right: -60, width: 350, height: 350, borderRadius: "50%", background: "radial-gradient(circle, rgba(23,200,163,0.06) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
 
-      <div style={{ maxWidth: 480, margin: "0 auto", minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", zIndex: 1 }}>
-        <Header />
-        <div style={{ flex: 1, overflowY: "auto", paddingBottom: 90 }}>
-          {tab === "home"    && <HomeScreen    onStart={() => setTab("workout")} savedWorkout={saved} stats={stats} />}
-          {tab === "create"  && <BuildScreen   onWorkoutCreated={handleCreated} />}
-          {tab === "workout" && <WorkoutScreen workout={saved} onComplete={handleDone} />}
-          {tab === "history" && <HistoryScreen history={history} />}
+      <div style={{ minHeight: "100vh", display: "flex", justifyContent: "center", background: "var(--navy)" }}>
+        <div style={{ width: "100%", maxWidth: 520, minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", zIndex: 1 }}>
+          <Header />
+          <div style={{ flex: 1, paddingBottom: 110 }}>
+            {tab === "home"    && <HomeScreen    onStart={() => setTab("workout")} savedWorkout={saved} stats={stats} />}
+            {tab === "create"  && <BuildScreen   onWorkoutCreated={handleCreated} />}
+            {tab === "workout" && <WorkoutScreen workout={saved} onComplete={handleDone} />}
+            {tab === "history" && <HistoryScreen history={history} />}
+          </div>
+          <TabBar active={tab} onChange={setTab} />
         </div>
-        <TabBar active={tab} onChange={setTab} />
       </div>
     </>
   );
