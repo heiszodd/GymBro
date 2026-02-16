@@ -457,7 +457,7 @@ function Header({ user, onEditProfile }) {
           <button onClick={onEditProfile} style={{
             display:"flex", alignItems:"center", gap:8,
             background:"var(--glass2)", border:"1px solid var(--border)",
-            borderRadius:var(--radius-pill), padding:"6px 12px 6px 8px",
+            borderRadius:"var(--radius-pill)", padding:"6px 12px 6px 8px",
             cursor:"pointer", transition:"all .2s",
           }}
             onMouseEnter={e=>{ e.currentTarget.style.borderColor="var(--green3)"; }}
