@@ -31,7 +31,10 @@ const GLOBAL_CSS = `
     --pad:         20px;
   }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow-y: scroll; /* always reserve scrollbar space — prevents layout shift on tab switch */
+  }
   body {
     background: var(--navy);
     color: var(--text);
@@ -46,7 +49,11 @@ const GLOBAL_CSS = `
   ::-webkit-scrollbar-thumb { background: var(--green3); border-radius: 4px; }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes tabFade {
+    from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
@@ -58,7 +65,8 @@ const GLOBAL_CSS = `
   @keyframes float   { 0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);} }
   @keyframes gradientShift { 0%{background-position:0% 50%;}100%{background-position:200% 50%;} }
 
-  .fadeUp  { animation: fadeUp  .45s cubic-bezier(.34,1.1,.64,1) both; }
+  .fadeUp  { animation: fadeUp  .3s ease both; }
+  .tabFade { animation: tabFade .3s cubic-bezier(.25,.46,.45,.94) both; }
   .fadeIn  { animation: fadeIn  .35s ease both; }
   .popIn   { animation: popIn   .4s  cubic-bezier(.34,1.56,.64,1) both; }
   .slideIn { animation: slideIn .35s cubic-bezier(.34,1.2,.64,1) both; }
@@ -267,7 +275,7 @@ function useRipple() {
 function GlassCard({ children, style, className="", onClick, delay=0 }) {
   const ref = useRef(); const ripple = useRipple();
   return (
-    <div ref={ref} className={`card fadeUp ripple-container ${className}`}
+    <div ref={ref} className={`card ripple-container ${className}`}
       style={{ animationDelay:`${delay}ms`, ...style }}
       onClick={e => { if(onClick){ ripple(e,ref); onClick(e); } }}>
       {children}
@@ -713,7 +721,7 @@ function BuildScreen({ user, onWorkoutCreated }) {
       </div>
       <div key={`o-${key}`} style={{ display:"flex", flexDirection:"column", gap:8, marginBottom:22 }}>
         {cur.options.map((opt,i)=>(
-          <button key={opt} className={`option-btn fadeUp ${cur.val===opt?"sel":""}`} style={{ animationDelay:`${i*50}ms` }} onClick={()=>cur.set(opt)}>
+          <button key={opt} className={`option-btn fadeUp ${cur.val===opt?"sel":""}`} onClick={()=>cur.set(opt)}>
             <span>{opt}</span>
             {cur.val===opt&&<span>✓</span>}
           </button>
@@ -1041,10 +1049,12 @@ export default function GymBro() {
         <div style={{ width:"100%", maxWidth:520, display:"flex", flexDirection:"column", position:"relative", zIndex:1 }}>
           <Header user={user} onEditProfile={()=>setShowProfile(true)}/>
           <div style={{ flex:1, paddingBottom:20 }}>
-            {tab==="home"    && <HomeScreen    user={user} onStart={()=>setTab("workout")} savedWorkout={saved} stats={stats}/>}
-            {tab==="create"  && <BuildScreen   user={user} onWorkoutCreated={handleCreated}/>}
-            {tab==="workout" && <WorkoutScreen workout={saved} onComplete={handleDone}/>}
-            {tab==="history" && <HistoryScreen history={history}/>}
+            <div key={tab} className="tabFade" style={{ minHeight:"100%" }}>
+              {tab==="home"    && <HomeScreen    user={user} onStart={()=>setTab("workout")} savedWorkout={saved} stats={stats}/>}
+              {tab==="create"  && <BuildScreen   user={user} onWorkoutCreated={handleCreated}/>}
+              {tab==="workout" && <WorkoutScreen workout={saved} onComplete={handleDone}/>}
+              {tab==="history" && <HistoryScreen history={history}/>}
+            </div>
           </div>
           <TabBar active={tab} onChange={setTab}/>
         </div>
