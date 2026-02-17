@@ -616,8 +616,7 @@ function HomeScreen({ user, onStart, savedWorkout, stats }) {
           {new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})}
         </div>
         <div style={{ fontFamily:"var(--font-bold)", fontSize:28, fontWeight:900, lineHeight:1.35, marginBottom:8 }}>
-          {greeting}<span style={{ color:"var(--accent-1)" }>,</span><br/>
-          <span style={{ background:"linear-gradient(135deg,var(--accent-1),var(--accent-2))", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>{user.name.split(" ")[0]}</span>
+          {greeting}, <span style={{ background:"linear-gradient(135deg,var(--accent-1),var(--accent-2))", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>{user.name.split(" ")[0]}</span>
         </div>
         <div style={{ fontSize:13, color:"var(--text-sec)", display:"flex", gap:8, alignItems:"center" }}>
           <span>{envIcon}</span>
