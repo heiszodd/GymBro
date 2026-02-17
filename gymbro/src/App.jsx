@@ -1076,7 +1076,7 @@ function LandingScreen({ onEnter }) {
           <a href="#l-how">How it works</a>
           <a href="#l-testimonials">Reviews</a>
         </div>
-        <button className="l-nav-cta" onClick={onEnter}>Get Started Free</button>
+        <button className="l-nav-cta" onClick={(e)=>{ e.stopPropagation(); onEnter(); }}>Get Started Free</button>
       </nav>
 
       {/* HERO */}
@@ -1101,7 +1101,7 @@ function LandingScreen({ onEnter }) {
         </p>
 
         <div style={{ display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",position:"relative",zIndex:10,animation:"lrevealAnim .9s .55s ease both" }}>
-          <button className="l-btn-primary" onClick={onEnter}>Start Training Free →</button>
+          <button className="l-btn-primary" onClick={(e)=>{ e.stopPropagation(); onEnter(); }}>Start Training Free →</button>
           <a href="#l-how" className="l-btn-ghost" style={{ textDecoration:"none",display:"inline-block" }}>See How It Works</a>
         </div>
 
@@ -1243,7 +1243,7 @@ function LandingScreen({ onEnter }) {
         <h2 className="lreveal" style={{ fontSize:"clamp(40px,6vw,68px)",fontWeight:900,lineHeight:1.05,letterSpacing:"-2px",marginBottom:18,position:"relative",zIndex:1 }}>Your best workout<br/>starts right now.</h2>
         <p className="lreveal ld1" style={{ fontSize:17,color:"#7a9e94",marginBottom:44,position:"relative",zIndex:1,maxWidth:400,margin:"0 auto 44px",lineHeight:1.65 }}>Join thousands of athletes already training smarter with GymBro. Free to start.</p>
         <div className="lreveal ld2" style={{ display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",position:"relative",zIndex:10 }}>
-          <button className="l-btn-primary" onClick={onEnter}>Start Training Free →</button>
+          <button className="l-btn-primary" onClick={(e)=>{ e.stopPropagation(); onEnter(); }}>Start Training Free →</button>
           <a href="#l-features" className="l-btn-ghost" style={{ textDecoration:"none",display:"inline-block" }}>Learn More</a>
         </div>
       </section>
@@ -1290,7 +1290,7 @@ export default function GymBro() {
   };
 
   if(screen === "landing") return (
-    <LandingScreen onEnter={() => setScreen("app")} />
+    <LandingScreen onEnter={() => { console.log("onEnter called"); setScreen("app"); }} />
   );
 
   if(!user) return (
