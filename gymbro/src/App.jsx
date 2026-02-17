@@ -1072,9 +1072,9 @@ function LandingScreen({ onEnter }) {
           GymBro
         </div>
         <div className="l-nav-links">
-          <a href="#l-features">Features</a>
-          <a href="#l-how">How it works</a>
-          <a href="#l-testimonials">Reviews</a>
+          <button onClick={()=>document.getElementById("l-features")?.scrollIntoView({behavior:"smooth"})} style={{background:"none",border:"none",color:"#7a9e94",fontSize:"13px",fontWeight:500,cursor:"pointer",transition:"color .2s",fontFamily:"var(--font2)"}} onMouseEnter={e=>e.target.style.color="#f0f7f4"} onMouseLeave={e=>e.target.style.color="#7a9e94"}>Features</button>
+          <button onClick={()=>document.getElementById("l-how")?.scrollIntoView({behavior:"smooth"})} style={{background:"none",border:"none",color:"#7a9e94",fontSize:"13px",fontWeight:500,cursor:"pointer",transition:"color .2s",fontFamily:"var(--font2)"}} onMouseEnter={e=>e.target.style.color="#f0f7f4"} onMouseLeave={e=>e.target.style.color="#7a9e94"}>How it works</button>
+          <button onClick={()=>document.getElementById("l-testimonials")?.scrollIntoView({behavior:"smooth"})} style={{background:"none",border:"none",color:"#7a9e94",fontSize:"13px",fontWeight:500,cursor:"pointer",transition:"color .2s",fontFamily:"var(--font2)"}} onMouseEnter={e=>e.target.style.color="#f0f7f4"} onMouseLeave={e=>e.target.style.color="#7a9e94"}>Reviews</button>
         </div>
         <button className="l-nav-cta" onClick={(e)=>{ e.stopPropagation(); onEnter(); }}>Get Started Free</button>
       </nav>
@@ -1102,7 +1102,7 @@ function LandingScreen({ onEnter }) {
 
         <div style={{ display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",position:"relative",zIndex:10,animation:"lrevealAnim .9s .55s ease both" }}>
           <button className="l-btn-primary" onClick={(e)=>{ e.stopPropagation(); onEnter(); }}>Start Training Free →</button>
-          <a href="#l-how" className="l-btn-ghost" style={{ textDecoration:"none",display:"inline-block" }}>See How It Works</a>
+          <button className="l-btn-ghost" onClick={()=>document.getElementById("l-how")?.scrollIntoView({behavior:"smooth"})}>See How It Works</button>
         </div>
 
         {/* Phone mockup */}
@@ -1244,7 +1244,7 @@ function LandingScreen({ onEnter }) {
         <p className="lreveal ld1" style={{ fontSize:17,color:"#7a9e94",marginBottom:44,position:"relative",zIndex:1,maxWidth:400,margin:"0 auto 44px",lineHeight:1.65 }}>Join thousands of athletes already training smarter with GymBro. Free to start.</p>
         <div className="lreveal ld2" style={{ display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",position:"relative",zIndex:10 }}>
           <button className="l-btn-primary" onClick={(e)=>{ e.stopPropagation(); onEnter(); }}>Start Training Free →</button>
-          <a href="#l-features" className="l-btn-ghost" style={{ textDecoration:"none",display:"inline-block" }}>Learn More</a>
+          <button className="l-btn-ghost" onClick={()=>document.getElementById("l-features")?.scrollIntoView({behavior:"smooth"})}>Learn More</button>
         </div>
       </section>
 
@@ -1254,7 +1254,7 @@ function LandingScreen({ onEnter }) {
           <div style={{ fontWeight:800,fontSize:17,color:"#25d494" }}>💪 GymBro</div>
           <div style={{ display:"flex",gap:24 }}>
             {["Privacy","Terms","Contact","GitHub"].map(l=>(
-              <a key={l} href="#" style={{ color:"#3a5a50",fontSize:12,textDecoration:"none",transition:"color .2s" }}
+              <a key={l} href="javascript:void(0)" style={{ color:"#3a5a50",fontSize:12,textDecoration:"none",transition:"color .2s" }}
                 onMouseEnter={e=>e.target.style.color="#7a9e94"}
                 onMouseLeave={e=>e.target.style.color="#3a5a50"}>{l}</a>
             ))}
