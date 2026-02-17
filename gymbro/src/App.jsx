@@ -1082,8 +1082,8 @@ function LandingScreen({ onEnter }) {
       {/* HERO */}
       <section style={{ minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center",padding:"100px 5% 60px",position:"relative",overflow:"hidden" }}>
         {/* bg */}
-        <div style={{ position:"absolute",inset:0,background:"radial-gradient(ellipse 80% 60% at 50% 40%,rgba(29,179,126,.1) 0%,transparent 70%)",zIndex:0 }}/>
-        <div style={{ position:"absolute",inset:0,backgroundImage:"linear-gradient(rgba(29,179,126,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(29,179,126,.04) 1px,transparent 1px)",backgroundSize:"60px 60px",maskImage:"radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 100%)",WebkitMaskImage:"radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 100%)",zIndex:0 }}/>
+        <div style={{ position:"absolute",inset:0,background:"radial-gradient(ellipse 80% 60% at 50% 40%,rgba(29,179,126,.1) 0%,transparent 70%)",zIndex:0,pointerEvents:"none" }}/>
+        <div style={{ position:"absolute",inset:0,backgroundImage:"linear-gradient(rgba(29,179,126,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(29,179,126,.04) 1px,transparent 1px)",backgroundSize:"60px 60px",maskImage:"radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 100%)",WebkitMaskImage:"radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 100%)",zIndex:0,pointerEvents:"none" }}/>
 
         {/* eyebrow */}
         <div style={{ display:"inline-flex",alignItems:"center",gap:8,background:"rgba(29,179,126,.1)",border:"1px solid rgba(29,179,126,.25)",borderRadius:50,padding:"6px 16px",fontSize:11,fontWeight:700,color:"#25d494",letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:26,position:"relative",zIndex:1,animation:"lrevealAnim .8s .1s ease both" }}>
@@ -1100,7 +1100,7 @@ function LandingScreen({ onEnter }) {
           GymBro builds your personalised workout, guides you through every set, and holds you accountable — like having a world-class coach in your pocket.
         </p>
 
-        <div style={{ display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",position:"relative",zIndex:1,animation:"lrevealAnim .9s .55s ease both" }}>
+        <div style={{ display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",position:"relative",zIndex:10,animation:"lrevealAnim .9s .55s ease both" }}>
           <button className="l-btn-primary" onClick={onEnter}>Start Training Free →</button>
           <a href="#l-how" className="l-btn-ghost" style={{ textDecoration:"none",display:"inline-block" }}>See How It Works</a>
         </div>
@@ -1239,10 +1239,10 @@ function LandingScreen({ onEnter }) {
 
       {/* CTA */}
       <section style={{ padding:"130px 5%",textAlign:"center",background:"#0f1e35",position:"relative",overflow:"hidden" }}>
-        <div style={{ position:"absolute",inset:0,background:"radial-gradient(ellipse 70% 60% at 50% 50%,rgba(29,179,126,.1) 0%,transparent 70%)" }}/>
+        <div style={{ position:"absolute",inset:0,background:"radial-gradient(ellipse 70% 60% at 50% 50%,rgba(29,179,126,.1) 0%,transparent 70%)",pointerEvents:"none" }}/>
         <h2 className="lreveal" style={{ fontSize:"clamp(40px,6vw,68px)",fontWeight:900,lineHeight:1.05,letterSpacing:"-2px",marginBottom:18,position:"relative",zIndex:1 }}>Your best workout<br/>starts right now.</h2>
         <p className="lreveal ld1" style={{ fontSize:17,color:"#7a9e94",marginBottom:44,position:"relative",zIndex:1,maxWidth:400,margin:"0 auto 44px",lineHeight:1.65 }}>Join thousands of athletes already training smarter with GymBro. Free to start.</p>
-        <div className="lreveal ld2" style={{ display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",position:"relative",zIndex:1 }}>
+        <div className="lreveal ld2" style={{ display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",position:"relative",zIndex:10 }}>
           <button className="l-btn-primary" onClick={onEnter}>Start Training Free →</button>
           <a href="#l-features" className="l-btn-ghost" style={{ textDecoration:"none",display:"inline-block" }}>Learn More</a>
         </div>
@@ -1290,10 +1290,7 @@ export default function GymBro() {
   };
 
   if(screen === "landing") return (
-    <>
-      <style>{GLOBAL_CSS}</style>
-      <LandingScreen onEnter={() => setScreen("app")} />
-    </>
+    <LandingScreen onEnter={() => setScreen("app")} />
   );
 
   if(!user) return (
