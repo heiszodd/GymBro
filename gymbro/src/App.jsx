@@ -13,6 +13,7 @@ const CSS = `
     --gray2:  #cccccc;
     --gray3:  #f0f0f0;
     --lime:   #d0ff00;
+    --red:    #ff3b30;
     --font:   'IBM Plex Mono', monospace;
     --base:   8px;
     --radius: 12px;
@@ -28,204 +29,147 @@ const CSS = `
     -webkit-font-smoothing: antialiased;
   }
   
-  button {
-    font-family: var(--font);
-    cursor: pointer;
-    border: none;
-    background: none;
-  }
-  
-  input, select {
-    font-family: var(--font);
-    border: none;
-    outline: none;
-  }
+  button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+  input, select, textarea { font-family: var(--font); border: none; outline: none; }
   
   .btn-primary {
-    background: var(--black);
-    color: var(--white);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    background: var(--black); color: var(--white); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.5px;
     padding: calc(var(--base) * 2) calc(var(--base) * 3);
-    font-size: 12px;
-    border-radius: var(--radius);
-    transition: all 0.15s;
+    font-size: 12px; border-radius: var(--radius); transition: all 0.15s;
   }
   .btn-primary:hover { background: #1a1a1a; transform: translateY(-1px); }
   .btn-primary:active { background: #000; transform: translateY(0); }
   .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
   
   .btn-ghost {
-    background: var(--white);
-    color: var(--black);
-    border: 1px solid var(--black);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    background: var(--white); color: var(--black); border: 1px solid var(--black);
+    font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;
     padding: calc(var(--base) * 2) calc(var(--base) * 3);
-    font-size: 12px;
-    border-radius: var(--radius);
-    transition: all 0.1s;
+    font-size: 12px; border-radius: var(--radius); transition: all 0.1s;
   }
   .btn-ghost:hover { background: #f0f0f0; }
   .btn-ghost:active { background: #e8e8e8; }
   
   .btn-icon {
-    background: var(--white);
-    border: 1px solid var(--black);
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    transition: all 0.1s;
+    background: var(--white); border: 1px solid var(--black);
+    width: 40px; height: 40px; border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; transition: all 0.1s;
   }
   .btn-icon:hover { background: var(--gray3); }
   .btn-icon:active { background: var(--gray2); }
   
   .input {
-    width: 100%;
-    background: var(--white);
-    border: 1px solid var(--black);
-    padding: calc(var(--base) * 2);
-    font-size: 14px;
-    font-weight: 500;
+    width: 100%; background: var(--white); border: 1px solid var(--black);
+    padding: calc(var(--base) * 2); font-size: 14px; font-weight: 500;
     border-radius: var(--radius);
   }
   .input::placeholder { color: var(--gray); }
   .input:focus { border-color: var(--lime); box-shadow: 0 0 0 2px rgba(208, 255, 0, 0.1); }
   
-  .select {
-    width: 100%;
-    background: var(--white);
-    border: 1px solid var(--black);
-    padding: calc(var(--base) * 2);
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: var(--radius);
-    cursor: pointer;
+  .input-sm {
+    width: 80px; background: var(--white); border: 1px solid var(--black);
+    padding: calc(var(--base)) calc(var(--base) * 1.5);
+    font-size: 13px; font-weight: 600; border-radius: var(--radius);
+    text-align: center;
   }
-  .select:focus { border-color: var(--lime); box-shadow: 0 0 0 2px rgba(208, 255, 0, 0.1); }
+  .input-sm:focus { border-color: var(--lime); }
   
   .label {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--gray);
-    margin-bottom: var(--base);
-    display: block;
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--gray); margin-bottom: var(--base); display: block;
   }
   
   .card {
-    border: 1px solid var(--black);
-    background: var(--white);
-    padding: calc(var(--base) * 3);
-    border-radius: var(--radius);
+    border: 1px solid var(--black); background: var(--white);
+    padding: calc(var(--base) * 3); border-radius: var(--radius);
   }
   
-  .divider {
-    height: 1px;
-    background: var(--gray2);
-    margin: calc(var(--base) * 3) 0;
-  }
+  .divider { height: 1px; background: var(--gray2); margin: calc(var(--base) * 3) 0; }
 
   .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(10, 10, 10, 0.7);
-    backdrop-filter: blur(4px);
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: calc(var(--base) * 3);
-    animation: fadeIn 0.2s ease;
+    position: fixed; inset: 0; background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(4px); z-index: 2000;
+    display: flex; align-items: center; justify-content: center;
+    padding: calc(var(--base) * 3); animation: fadeIn 0.2s ease;
   }
 
   .modal {
-    background: var(--white);
-    border: 1px solid var(--black);
-    border-radius: calc(var(--radius) * 2);
-    max-width: 500px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
+    background: var(--white); border: 1px solid var(--black);
+    border-radius: calc(var(--radius) * 2); max-width: 500px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
     animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  .tab-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+    background: var(--white); border-top: 1px solid var(--black);
+    display: flex; padding: calc(var(--base) * 2) calc(var(--base) * 2) calc(var(--base) * 3);
+    gap: var(--base);
   }
 
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  .tab-btn {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 4px; padding: calc(var(--base) * 1.5); border-radius: var(--radius);
+    transition: background 0.15s; font-size: 20px; background: none; border: none;
   }
+  .tab-btn:active { background: var(--gray3); }
+  .tab-btn.active { background: var(--lime); }
+  .tab-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 48px;
-    height: 24px;
-  }
-
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background-color: var(--gray2);
-    transition: 0.2s;
-    border-radius: 24px;
-  }
-
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: 0.2s;
-    border-radius: 50%;
-  }
-
-  input:checked + .slider {
-    background-color: var(--lime);
-  }
-
-  input:checked + .slider:before {
-    transform: translateX(24px);
-  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 `;
 
-/* ─── CAMERA REP COUNTER ─── */
-function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
+/* ─── WORKOUT TEMPLATES ─── */
+const MUSCLE_GROUPS = {
+  chest: { name: 'Chest', exercises: ['Bench Press', 'Incline Press', 'Chest Fly', 'Push-Up'] },
+  back: { name: 'Back', exercises: ['Pull-Up', 'Bent Row', 'Lat Pulldown', 'Deadlift'] },
+  shoulders: { name: 'Shoulders', exercises: ['Overhead Press', 'Lateral Raise', 'Front Raise', 'Face Pull'] },
+  biceps: { name: 'Biceps', exercises: ['Barbell Curl', 'Hammer Curl', 'Preacher Curl'] },
+  triceps: { name: 'Triceps', exercises: ['Dips', 'Tricep Extension', 'Close Grip Press'] },
+  legs: { name: 'Legs', exercises: ['Squat', 'Leg Press', 'Lunge', 'Leg Curl', 'Calf Raise'] },
+  core: { name: 'Core', exercises: ['Plank', 'Crunches', 'Leg Raises', 'Russian Twist'] }
+};
+
+const RECOMMENDED_SPLITS = [
+  { name: 'Push/Pull/Legs', days: [
+    { label: 'Push', groups: ['chest', 'shoulders', 'triceps'] },
+    { label: 'Pull', groups: ['back', 'biceps'] },
+    { label: 'Legs', groups: ['legs', 'core'] }
+  ]},
+  { name: 'Upper/Lower', days: [
+    { label: 'Upper', groups: ['chest', 'back', 'shoulders', 'biceps', 'triceps'] },
+    { label: 'Lower', groups: ['legs', 'core'] }
+  ]},
+  { name: 'Bro Split', days: [
+    { label: 'Chest', groups: ['chest'] },
+    { label: 'Back', groups: ['back'] },
+    { label: 'Shoulders', groups: ['shoulders'] },
+    { label: 'Arms', groups: ['biceps', 'triceps'] },
+    { label: 'Legs', groups: ['legs'] }
+  ]}
+];
+
+/* ─── CAMERA WITH GUIDANCE ─── */
+function CameraWorkout({ exercise, sets, reps, onComplete, onSkip }) {
   const videoRef = useRef(null);
-  const [reps, setReps] = useState(0);
+  const canvasRef = useRef(null);
+  const [currentSet, setCurrentSet] = useState(1);
+  const [currentRep, setCurrentRep] = useState(0);
   const [isTracking, setIsTracking] = useState(false);
   const [error, setError] = useState(null);
   const [lastY, setLastY] = useState(null);
   const [direction, setDirection] = useState(null);
+  const [showGuidance, setShowGuidance] = useState(true);
   const animationRef = useRef(null);
-  const canvasRef = useRef(null);
 
   useEffect(() => {
     startCamera();
-    return () => {
-      stopCamera();
-    };
+    setTimeout(() => setShowGuidance(false), 5000);
+    return () => stopCamera();
   }, []);
 
   const startCamera = async () => {
@@ -242,18 +186,15 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
         };
       }
     } catch (err) {
-      setError('Camera access denied or unavailable');
-      console.error(err);
+      setError('Camera access denied');
     }
   };
 
   const stopCamera = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
+    if (videoRef.current?.srcObject) {
       videoRef.current.srcObject.getTracks().forEach(track => track.stop());
     }
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-    }
+    if (animationRef.current) cancelAnimationFrame(animationRef.current);
   };
 
   const detectMotion = () => {
@@ -265,12 +206,10 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
     
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
-
     let prevFrame = null;
 
     const processFrame = () => {
       if (!isTracking) return;
-
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       const currentFrame = ctx.getImageData(0, 0, canvas.width, canvas.height);
       
@@ -304,15 +243,13 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
     }
 
     if (motionPixels > 100) {
-      const avgY = yWeightedSum / motionPixels;
-      return { y: avgY };
+      return { y: yWeightedSum / motionPixels };
     }
     return null;
   };
 
   const updateRepCount = (motion) => {
     if (!motion) return;
-
     const THRESHOLD = 20;
 
     if (lastY !== null) {
@@ -322,13 +259,19 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
         const newDirection = delta < 0 ? 'up' : 'down';
         
         if (direction === 'up' && newDirection === 'down') {
-          setReps(r => {
-            const newReps = r + 1;
-            if (newReps >= targetReps) {
-              setTimeout(() => onComplete(), 300);
-            }
-            return newReps;
-          });
+          const newRep = currentRep + 1;
+          setCurrentRep(newRep);
+          
+          if (newRep >= reps) {
+            setTimeout(() => {
+              if (currentSet < sets) {
+                setCurrentSet(currentSet + 1);
+                setCurrentRep(0);
+              } else {
+                onComplete();
+              }
+            }, 300);
+          }
         }
         
         setDirection(newDirection);
@@ -338,95 +281,100 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
     setLastY(motion.y);
   };
 
-  const progress = Math.min(reps / targetReps, 1);
+  const progressSet = (currentRep / reps);
+  const progressTotal = ((currentSet - 1) * reps + currentRep) / (sets * reps);
 
   return (
-    <div style={{
-      position: 'fixed', inset: 0, zIndex: 1000,
-      background: 'var(--black)', color: 'var(--white)',
-      display: 'flex', flexDirection: 'column'
-    }}>
-      <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          muted
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            transform: 'scaleX(-1)'
-          }}
-        />
+    <div style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'var(--black)', color: 'var(--white)' }}>
+      <div style={{ position: 'relative', height: '100%' }}>
+        <video ref={videoRef} autoPlay playsInline muted
+          style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scaleX(-1)' }} />
         <canvas ref={canvasRef} style={{ display: 'none' }} />
-        
+
+        {/* Guidance Overlay */}
+        {showGuidance && (
+          <div style={{
+            position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.85)',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            padding: 'calc(var(--base) * 4)', textAlign: 'center'
+          }}>
+            <div style={{ fontSize: 48, marginBottom: 'calc(var(--base) * 2)' }}>📍</div>
+            <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 'var(--base)', color: 'var(--lime)' }}>
+              POSITIONING GUIDE
+            </div>
+            <div style={{ fontSize: 12, maxWidth: 300, lineHeight: 1.6, marginBottom: 'calc(var(--base) * 3)' }}>
+              • Stand centered in frame<br/>
+              • Full body visible<br/>
+              • Good lighting<br/>
+              • Clear background<br/>
+              • Move through full range
+            </div>
+            <button
+              onClick={() => setShowGuidance(false)}
+              style={{
+                background: 'var(--lime)', color: 'var(--black)', border: 'none',
+                padding: 'calc(var(--base) * 2) calc(var(--base) * 4)',
+                fontSize: 12, fontWeight: 700, textTransform: 'uppercase',
+                borderRadius: 'var(--radius)'
+              }}
+            >
+              Got it
+            </button>
+          </div>
+        )}
+
+        {/* Stats Overlay */}
         <div style={{
-          position: 'absolute', inset: 0,
-          display: 'flex', flexDirection: 'column',
-          justifyContent: 'space-between',
-          padding: 'calc(var(--base) * 4)',
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.6) 100%)'
+          position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
+          justifyContent: 'space-between', padding: 'calc(var(--base) * 4)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), transparent 30%, transparent 70%, rgba(0,0,0,0.6))'
         }}>
+          {/* Top info */}
           <div>
             <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4, opacity: 0.7 }}>
               {exercise}
             </div>
-            <div style={{ fontSize: 64, fontWeight: 700, lineHeight: 1, fontFamily: 'var(--font)' }}>
-              {reps}<span style={{ fontSize: 32, opacity: 0.5 }}>/{targetReps}</span>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
+              <div style={{ fontSize: 72, fontWeight: 700, lineHeight: 1 }}>{currentRep}</div>
+              <div style={{ fontSize: 24, opacity: 0.5 }}>/ {reps}</div>
+            </div>
+            <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 8 }}>
+              SET {currentSet} / {sets}
             </div>
             {direction && (
-              <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', marginTop: 8, color: 'var(--lime)' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: 'var(--lime)' }}>
                 {direction === 'up' ? '↑ UP' : '↓ DOWN'}
               </div>
             )}
           </div>
 
+          {/* Bottom controls */}
           <div>
-            <div style={{ height: 4, background: 'rgba(255,255,255,0.2)', marginBottom: 'calc(var(--base) * 2)', overflow: 'hidden', borderRadius: 4 }}>
-              <div style={{
-                height: '100%',
-                width: `${progress * 100}%`,
-                background: 'var(--lime)',
-                transition: 'width 0.3s ease'
-              }} />
+            {/* Set progress */}
+            <div style={{ height: 3, background: 'rgba(255,255,255,0.2)', marginBottom: 6, overflow: 'hidden', borderRadius: 2 }}>
+              <div style={{ height: '100%', width: `${progressSet * 100}%`, background: 'var(--lime)', transition: 'width 0.2s' }} />
+            </div>
+
+            {/* Total progress */}
+            <div style={{ height: 6, background: 'rgba(255,255,255,0.2)', marginBottom: 'calc(var(--base) * 2)', overflow: 'hidden', borderRadius: 3 }}>
+              <div style={{ height: '100%', width: `${progressTotal * 100}%`, background: 'var(--lime)', transition: 'width 0.3s' }} />
             </div>
 
             <div style={{ display: 'flex', gap: 'var(--base)' }}>
-              <button
-                onClick={onSkip}
-                style={{
-                  flex: 1,
-                  background: 'rgba(255,255,255,0.1)',
-                  color: 'white',
-                  border: '1px solid rgba(255,255,255,0.3)',
-                  padding: 'calc(var(--base) * 2)',
-                  fontSize: 12,
-                  fontWeight: 600,
-                  textTransform: 'uppercase',
-                  letterSpacing: 0.5,
-                  borderRadius: 'var(--radius)'
-                }}
-              >
+              <button onClick={onSkip} style={{
+                flex: 1, background: 'rgba(255,255,255,0.1)', color: 'white',
+                border: '1px solid rgba(255,255,255,0.3)', padding: 'calc(var(--base) * 2)',
+                fontSize: 12, fontWeight: 600, textTransform: 'uppercase', borderRadius: 'var(--radius)'
+              }}>
                 Skip
               </button>
-              {reps >= targetReps && (
-                <button
-                  onClick={onComplete}
-                  style={{
-                    flex: 2,
-                    background: 'var(--lime)',
-                    color: 'var(--black)',
-                    border: 'none',
-                    padding: 'calc(var(--base) * 2)',
-                    fontSize: 12,
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: 0.5,
-                    borderRadius: 'var(--radius)'
-                  }}
-                >
-                  Complete Set
+              {currentSet >= sets && currentRep >= reps && (
+                <button onClick={onComplete} style={{
+                  flex: 2, background: 'var(--lime)', color: 'var(--black)', border: 'none',
+                  padding: 'calc(var(--base) * 2)', fontSize: 12, fontWeight: 700,
+                  textTransform: 'uppercase', borderRadius: 'var(--radius)'
+                }}>
+                  Complete
                 </button>
               )}
             </div>
@@ -435,25 +383,15 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
 
         {error && (
           <div style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            background: 'var(--black)',
-            border: '1px solid var(--lime)',
-            padding: 'calc(var(--base) * 3)',
-            maxWidth: 300,
-            textAlign: 'center',
+            position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+            background: 'var(--black)', border: '1px solid var(--lime)',
+            padding: 'calc(var(--base) * 3)', maxWidth: 300, textAlign: 'center',
             borderRadius: 'calc(var(--radius) * 2)'
           }}>
-            <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 'var(--base)', color: 'var(--lime)' }}>
-              CAMERA ERROR
-            </div>
-            <div style={{ fontSize: 11, opacity: 0.8, marginBottom: 'calc(var(--base) * 2)' }}>
-              {error}
-            </div>
-            <button onClick={onSkip} className="btn-ghost" style={{ width: '100%', color: 'var(--white)', borderColor: 'var(--white)' }}>
-              Skip Set
+            <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 'var(--base)', color: 'var(--lime)' }}>ERROR</div>
+            <div style={{ fontSize: 11, marginBottom: 'calc(var(--base) * 2)' }}>{error}</div>
+            <button onClick={onSkip} className="btn-ghost" style={{ width: '100%', color: 'white', borderColor: 'white' }}>
+              Skip
             </button>
           </div>
         )}
@@ -462,24 +400,484 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
   );
 }
 
-/* ─── SETTINGS MODAL ─── */
-function SettingsModal({ user, onSave, onClose, onLogout }) {
-  const [name, setName] = useState(user.name);
-  const [env, setEnv] = useState(user.environment);
-  const [autoCamera, setAutoCamera] = useState(user.autoCamera !== false);
-  const [restTimer, setRestTimer] = useState(user.restTimer !== false);
-  const [soundEffects, setSoundEffects] = useState(user.soundEffects !== false);
+/* ─── MANUAL WORKOUT WITH STOPWATCH ─── */
+function ManualWorkout({ exercise, sets, reps, restTime, onComplete, onSkip }) {
+  const [currentSet, setCurrentSet] = useState(1);
+  const [mode, setMode] = useState('ready'); // ready | working | resting
+  const [workTime, setWorkTime] = useState(0);
+  const [restRemaining, setRestRemaining] = useState(restTime);
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (mode === 'working') {
+      intervalRef.current = setInterval(() => {
+        setWorkTime(t => t + 0.1);
+      }, 100);
+    } else if (mode === 'resting') {
+      intervalRef.current = setInterval(() => {
+        setRestRemaining(t => {
+          if (t <= 0.1) {
+            clearInterval(intervalRef.current);
+            handleNextSet();
+            return restTime;
+          }
+          return t - 0.1;
+        });
+      }, 100);
+    } else {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [mode]);
+
+  const handleStartSet = () => {
+    setWorkTime(0);
+    setMode('working');
+  };
+
+  const handleFinishSet = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (currentSet < sets) {
+      setMode('resting');
+      setRestRemaining(restTime);
+    } else {
+      onComplete();
+    }
+  };
+
+  const handleNextSet = () => {
+    setCurrentSet(currentSet + 1);
+    setMode('ready');
+  };
+
+  const handleSkipRest = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    handleNextSet();
+  };
+
+  const progress = (currentSet - 1) / sets;
+
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', paddingBottom: 'calc(var(--base) * 10)' }}>
+      {/* Header */}
+      <div style={{ borderBottom: '1px solid var(--black)', padding: 'calc(var(--base) * 2) calc(var(--base) * 3)' }}>
+        <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--gray)', marginBottom: 4 }}>
+          Manual Mode
+        </div>
+        <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 'var(--base)' }}>{exercise}</div>
+        <div style={{ height: 4, background: 'var(--gray2)', overflow: 'hidden', borderRadius: 4 }}>
+          <div style={{ height: '100%', width: `${progress * 100}%`, background: 'var(--black)', transition: 'width 0.3s' }} />
+        </div>
+      </div>
+
+      {/* Content */}
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'calc(var(--base) * 3)' }}>
+        <div style={{ maxWidth: 400, width: '100%', textAlign: 'center' }}>
+          {mode === 'ready' && (
+            <>
+              <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 'calc(var(--base) * 2)', color: 'var(--gray)' }}>
+                SET {currentSet} / {sets}
+              </div>
+              <div style={{ fontSize: 72, fontWeight: 700, marginBottom: 'calc(var(--base) * 2)' }}>
+                {reps}
+              </div>
+              <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 'calc(var(--base) * 4)', color: 'var(--gray)' }}>
+                TARGET REPS
+              </div>
+              <button className="btn-primary" onClick={handleStartSet} style={{ width: '100%', padding: 'calc(var(--base) * 3)' }}>
+                Start Set
+              </button>
+            </>
+          )}
+
+          {mode === 'working' && (
+            <>
+              <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 'calc(var(--base) * 2)', color: 'var(--lime)', animation: 'pulse 1.5s infinite' }}>
+                ● WORKING
+              </div>
+              <div style={{ fontSize: 96, fontWeight: 700, marginBottom: 'calc(var(--base) * 2)', fontVariantNumeric: 'tabular-nums' }}>
+                {workTime.toFixed(1)}
+              </div>
+              <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 'calc(var(--base) * 4)', color: 'var(--gray)' }}>
+                SECONDS
+              </div>
+              <button className="btn-primary" onClick={handleFinishSet} style={{ width: '100%', padding: 'calc(var(--base) * 3)' }}>
+                Finish Set
+              </button>
+            </>
+          )}
+
+          {mode === 'resting' && (
+            <>
+              <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 'calc(var(--base) * 2)', color: 'var(--gray)' }}>
+                REST PERIOD
+              </div>
+              <div style={{ fontSize: 96, fontWeight: 700, marginBottom: 'calc(var(--base) * 2)', fontVariantNumeric: 'tabular-nums' }}>
+                {Math.ceil(restRemaining)}
+              </div>
+              <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 'calc(var(--base) * 4)', color: 'var(--gray)' }}>
+                SECONDS REMAINING
+              </div>
+              <button className="btn-ghost" onClick={handleSkipRest} style={{ width: '100%' }}>
+                Skip Rest
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Bottom skip */}
+      <div style={{ padding: 'calc(var(--base) * 3)', borderTop: '1px solid var(--gray2)' }}>
+        <button className="btn-ghost" onClick={onSkip} style={{ width: '100%' }}>
+          Skip Exercise
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── WORKOUT PLANNER ─── */
+function WorkoutPlanner({ onSave, onClose }) {
+  const [step, setStep] = useState(0); // 0: choose split, 1: customize exercises
+  const [selectedSplit, setSelectedSplit] = useState(null);
+  const [schedule, setSchedule] = useState({});
+  const [customWorkouts, setCustomWorkouts] = useState([]);
+
+  const handleSelectSplit = (split) => {
+    setSelectedSplit(split);
+    const initial = {};
+    split.days.forEach((day, i) => {
+      const exercises = [];
+      day.groups.forEach(groupKey => {
+        const group = MUSCLE_GROUPS[groupKey];
+        group.exercises.slice(0, 3).forEach(ex => {
+          exercises.push({ name: ex, sets: 3, reps: 10, rest: 60 });
+        });
+      });
+      initial[i] = { label: day.label, exercises };
+    });
+    setCustomWorkouts(initial);
+    setStep(1);
+  };
 
   const handleSave = () => {
-    onSave({
-      ...user,
-      name: name.trim(),
-      environment: env,
-      autoCamera,
-      restTimer,
-      soundEffects
-    });
+    onSave({ split: selectedSplit.name, workouts: customWorkouts });
   };
+
+  const updateExercise = (dayIdx, exIdx, field, value) => {
+    setCustomWorkouts(prev => ({
+      ...prev,
+      [dayIdx]: {
+        ...prev[dayIdx],
+        exercises: prev[dayIdx].exercises.map((ex, i) =>
+          i === exIdx ? { ...ex, [field]: parseInt(value) || 0 } : ex
+        )
+      }
+    }));
+  };
+
+  if (step === 0) {
+    return (
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal" onClick={e => e.stopPropagation()}>
+          <div style={{ padding: 'calc(var(--base) * 4)', borderBottom: '1px solid var(--gray2)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ fontSize: 20, fontWeight: 700 }}>Choose Split</h2>
+              <button className="btn-icon" onClick={onClose} style={{ border: 'none' }}>✕</button>
+            </div>
+          </div>
+          <div style={{ padding: 'calc(var(--base) * 4)' }}>
+            {RECOMMENDED_SPLITS.map(split => (
+              <button
+                key={split.name}
+                onClick={() => handleSelectSplit(split)}
+                className="card"
+                style={{ width: '100%', marginBottom: 'calc(var(--base) * 2)', textAlign: 'left', cursor: 'pointer', padding: 'calc(var(--base) * 3)' }}
+              >
+                <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 'var(--base)' }}>{split.name}</div>
+                <div style={{ fontSize: 11, color: 'var(--gray)' }}>
+                  {split.days.map(d => d.label).join(' → ')}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 600 }}>
+        <div style={{ padding: 'calc(var(--base) * 4)', borderBottom: '1px solid var(--gray2)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h2 style={{ fontSize: 20, fontWeight: 700 }}>Customize Workouts</h2>
+            <button className="btn-icon" onClick={() => setStep(0)} style={{ border: 'none' }}>←</button>
+          </div>
+        </div>
+        <div style={{ padding: 'calc(var(--base) * 4)' }}>
+          {Object.entries(customWorkouts).map(([dayIdx, workout]) => (
+            <div key={dayIdx} style={{ marginBottom: 'calc(var(--base) * 4)' }}>
+              <div className="label">{workout.label}</div>
+              {workout.exercises.map((ex, exIdx) => (
+                <div key={exIdx} className="card" style={{ marginBottom: 'var(--base)', padding: 'calc(var(--base) * 2)' }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 'var(--base)' }}>{ex.name}</div>
+                  <div style={{ display: 'flex', gap: 'var(--base)', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 9, fontWeight: 600, textTransform: 'uppercase', color: 'var(--gray)', marginBottom: 4 }}>Sets</div>
+                      <input className="input-sm" type="number" value={ex.sets}
+                        onChange={e => updateExercise(dayIdx, exIdx, 'sets', e.target.value)} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 9, fontWeight: 600, textTransform: 'uppercase', color: 'var(--gray)', marginBottom: 4 }}>Reps</div>
+                      <input className="input-sm" type="number" value={ex.reps}
+                        onChange={e => updateExercise(dayIdx, exIdx, 'reps', e.target.value)} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 9, fontWeight: 600, textTransform: 'uppercase', color: 'var(--gray)', marginBottom: 4 }}>Rest(s)</div>
+                      <input className="input-sm" type="number" value={ex.rest}
+                        onChange={e => updateExercise(dayIdx, exIdx, 'rest', e.target.value)} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+          <button className="btn-primary" onClick={handleSave} style={{ width: '100%' }}>
+            Save Program
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── SCHEDULE SCREEN ─── */
+function ScheduleScreen({ program, onStartWorkout }) {
+  const [selectedDay, setSelectedDay] = useState(null);
+
+  if (!program) {
+    return (
+      <div style={{ minHeight: '100vh', padding: 'calc(var(--base) * 10) calc(var(--base) * 3) calc(var(--base) * 15)' }}>
+        <div style={{ maxWidth: 600, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ fontSize: 48, marginBottom: 'calc(var(--base) * 3)' }}>📅</div>
+          <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 'var(--base)' }}>No Program Set</h1>
+          <p style={{ fontSize: 13, color: 'var(--gray)', marginBottom: 'calc(var(--base) * 4)' }}>
+            Create a workout split in the Plan tab
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const DAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+
+  return (
+    <div style={{ minHeight: '100vh', padding: 'calc(var(--base) * 10) calc(var(--base) * 3) calc(var(--base) * 15)' }}>
+      <div style={{ maxWidth: 600, margin: '0 auto' }}>
+        <div style={{ marginBottom: 'calc(var(--base) * 4)' }}>
+          <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 'var(--base)' }}>Weekly Schedule</h1>
+          <div style={{ fontSize: 12, color: 'var(--gray)' }}>{program.split}</div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 'var(--base)', marginBottom: 'calc(var(--base) * 4)' }}>
+          {DAYS.map((day, i) => {
+            const workout = program.workouts[i % Object.keys(program.workouts).length];
+            const isRest = !workout;
+            return (
+              <button
+                key={day}
+                onClick={() => !isRest && setSelectedDay(i % Object.keys(program.workouts).length)}
+                className={selectedDay === i % Object.keys(program.workouts).length ? 'card' : ''}
+                style={{
+                  padding: 'calc(var(--base) * 2)',
+                  textAlign: 'center',
+                  background: selectedDay === i % Object.keys(program.workouts).length ? 'var(--lime)' : 'var(--white)',
+                  border: '1px solid var(--black)',
+                  borderRadius: 'var(--radius)',
+                  cursor: isRest ? 'default' : 'pointer'
+                }}
+              >
+                <div style={{ fontSize: 10, fontWeight: 700, marginBottom: 4 }}>{day}</div>
+                <div style={{ fontSize: 9, color: 'var(--gray)' }}>
+                  {isRest ? 'Rest' : workout.label}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {selectedDay !== null && program.workouts[selectedDay] && (
+          <div className="card">
+            <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 'calc(var(--base) * 2)' }}>
+              {program.workouts[selectedDay].label}
+            </div>
+            <div style={{ marginBottom: 'calc(var(--base) * 3)' }}>
+              {program.workouts[selectedDay].exercises.map((ex, i) => (
+                <div key={i} style={{ borderTop: i > 0 ? '1px solid var(--gray2)' : 'none', padding: 'var(--base) 0', fontSize: 12 }}>
+                  <div style={{ fontWeight: 600 }}>{ex.name}</div>
+                  <div style={{ fontSize: 11, color: 'var(--gray)' }}>
+                    {ex.sets} × {ex.reps} • {ex.rest}s rest
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button className="btn-primary" onClick={() => onStartWorkout(program.workouts[selectedDay])} style={{ width: '100%' }}>
+              Start Workout
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── ACTIVE WORKOUT ─── */
+function ActiveWorkout({ workout, onComplete }) {
+  const [step, setStep] = useState('choose'); // choose | camera | manual
+  const [currentExIdx, setCurrentExIdx] = useState(0);
+
+  const handleExerciseComplete = () => {
+    if (currentExIdx + 1 < workout.exercises.length) {
+      setCurrentExIdx(currentExIdx + 1);
+      setStep('choose');
+    } else {
+      onComplete({ completedAt: new Date(), workout: workout.label });
+    }
+  };
+
+  const ex = workout.exercises[currentExIdx];
+
+  if (step === 'choose') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 'calc(var(--base) * 3)' }}>
+        <div style={{ maxWidth: 400, width: '100%', textAlign: 'center' }}>
+          <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', color: 'var(--gray)', marginBottom: 'var(--base)' }}>
+            Exercise {currentExIdx + 1} / {workout.exercises.length}
+          </div>
+          <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 'calc(var(--base) * 2)' }}>{ex.name}</h1>
+          <div style={{ fontSize: 14, color: 'var(--gray)', marginBottom: 'calc(var(--base) * 4)' }}>
+            {ex.sets} sets × {ex.reps} reps • {ex.rest}s rest
+          </div>
+          <button className="btn-primary" onClick={() => setStep('camera')} style={{ width: '100%', marginBottom: 'var(--base)' }}>
+            Use Camera
+          </button>
+          <button className="btn-ghost" onClick={() => setStep('manual')} style={{ width: '100%' }}>
+            Manual Mode
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'camera') {
+    return <CameraWorkout exercise={ex.name} sets={ex.sets} reps={ex.reps} onComplete={handleExerciseComplete} onSkip={handleExerciseComplete} />;
+  }
+
+  return <ManualWorkout exercise={ex.name} sets={ex.sets} reps={ex.reps} restTime={ex.rest} onComplete={handleExerciseComplete} onSkip={handleExerciseComplete} />;
+}
+
+/* ─── HOME ─── */
+function Home({ user, history, onOpenSettings }) {
+  return (
+    <div style={{ minHeight: '100vh', padding: 'calc(var(--base) * 10) calc(var(--base) * 3) calc(var(--base) * 15)' }}>
+      <div style={{ maxWidth: 600, margin: '0 auto' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'calc(var(--base) * 6)' }}>
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', color: 'var(--gray)', marginBottom: 4 }}>
+              {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+            </div>
+            <h1 style={{ fontSize: 28, fontWeight: 700 }}>{user.name}</h1>
+          </div>
+          <button className="btn-icon" onClick={onOpenSettings}>⚙</button>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--base)', marginBottom: 'calc(var(--base) * 4)' }}>
+          {[
+            { label: 'Total', value: history.length },
+            { label: 'This Week', value: history.filter(h => (Date.now() - new Date(h.completedAt)) < 7 * 86400000).length },
+            { label: 'Streak', value: Math.min(history.length, 7) }
+          ].map(stat => (
+            <div key={stat.label} className="card" style={{ textAlign: 'center', padding: 'calc(var(--base) * 2)' }}>
+              <div style={{ fontSize: 24, fontWeight: 700, marginBottom: 4 }}>{stat.value}</div>
+              <div style={{ fontSize: 9, textTransform: 'uppercase', color: 'var(--gray)' }}>{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {history.length > 0 && (
+          <>
+            <div className="label" style={{ marginBottom: 'calc(var(--base) * 2)' }}>Recent Sessions</div>
+            {history.slice(-5).reverse().map((h, i) => (
+              <div key={i} style={{ borderTop: '1px solid var(--gray2)', padding: 'calc(var(--base) * 2) 0', display: 'flex', justifyContent: 'space-between' }}>
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 4 }}>
+                    {new Date(h.completedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                  </div>
+                  <div style={{ fontSize: 10, color: 'var(--gray)' }}>{h.workout}</div>
+                </div>
+                <div style={{ fontSize: 20 }}>✓</div>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── PLAN SCREEN ─── */
+function PlanScreen({ program, onSaveProgram }) {
+  const [showPlanner, setShowPlanner] = useState(false);
+
+  return (
+    <div style={{ minHeight: '100vh', padding: 'calc(var(--base) * 10) calc(var(--base) * 3) calc(var(--base) * 15)' }}>
+      <div style={{ maxWidth: 600, margin: '0 auto' }}>
+        <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 'calc(var(--base) * 4)' }}>Program</h1>
+
+        {!program ? (
+          <div style={{ textAlign: 'center', padding: 'calc(var(--base) * 6) 0' }}>
+            <div style={{ fontSize: 48, marginBottom: 'calc(var(--base) * 3)' }}>💪</div>
+            <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 'var(--base)' }}>No Program Set</div>
+            <div style={{ fontSize: 12, color: 'var(--gray)', marginBottom: 'calc(var(--base) * 4)' }}>
+              Create a personalized workout split
+            </div>
+            <button className="btn-primary" onClick={() => setShowPlanner(true)}>
+              Create Program
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="card" style={{ marginBottom: 'calc(var(--base) * 3)' }}>
+              <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 'var(--base)' }}>{program.split}</div>
+              <div style={{ fontSize: 11, color: 'var(--gray)' }}>
+                {Object.values(program.workouts).map(w => w.label).join(' • ')}
+              </div>
+            </div>
+            <button className="btn-ghost" onClick={() => setShowPlanner(true)} style={{ width: '100%' }}>
+              Edit Program
+            </button>
+          </>
+        )}
+
+        {showPlanner && <WorkoutPlanner onSave={p => { onSaveProgram(p); setShowPlanner(false); }} onClose={() => setShowPlanner(false)} />}
+      </div>
+    </div>
+  );
+}
+
+/* ─── SETTINGS ─── */
+function SettingsModal({ user, onSave, onClose, onLogout }) {
+  const [name, setName] = useState(user.name);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -490,87 +888,17 @@ function SettingsModal({ user, onSave, onClose, onLogout }) {
             <button className="btn-icon" onClick={onClose} style={{ border: 'none' }}>✕</button>
           </div>
         </div>
-
         <div style={{ padding: 'calc(var(--base) * 4)' }}>
-          {/* Profile */}
           <div style={{ marginBottom: 'calc(var(--base) * 4)' }}>
-            <div className="label">Profile</div>
-            <div style={{ marginBottom: 'calc(var(--base) * 2)' }}>
-              <label className="label" style={{ fontSize: 9 }}>Name</label>
-              <input
-                className="input"
-                value={name}
-                onChange={e => setName(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="label" style={{ fontSize: 9 }}>Environment</label>
-              <select className="select" value={env} onChange={e => setEnv(e.target.value)}>
-                <option value="gym">GYM - Full equipment</option>
-                <option value="home">HOME - Bodyweight only</option>
-              </select>
-            </div>
+            <label className="label">Name</label>
+            <input className="input" value={name} onChange={e => setName(e.target.value)} />
           </div>
-
-          <div className="divider" />
-
-          {/* Preferences */}
-          <div style={{ marginBottom: 'calc(var(--base) * 4)' }}>
-            <div className="label">Preferences</div>
-            
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'calc(var(--base) * 2)' }}>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 4 }}>Auto-start Camera</div>
-                <div style={{ fontSize: 10, color: 'var(--gray)' }}>Launch camera by default</div>
-              </div>
-              <label className="switch">
-                <input type="checkbox" checked={autoCamera} onChange={e => setAutoCamera(e.target.checked)} />
-                <span className="slider"></span>
-              </label>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'calc(var(--base) * 2)' }}>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 4 }}>Rest Timer</div>
-                <div style={{ fontSize: 10, color: 'var(--gray)' }}>Show countdown between sets</div>
-              </div>
-              <label className="switch">
-                <input type="checkbox" checked={restTimer} onChange={e => setRestTimer(e.target.checked)} />
-                <span className="slider"></span>
-              </label>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 4 }}>Sound Effects</div>
-                <div style={{ fontSize: 10, color: 'var(--gray)' }}>Audio feedback on rep count</div>
-              </div>
-              <label className="switch">
-                <input type="checkbox" checked={soundEffects} onChange={e => setSoundEffects(e.target.checked)} />
-                <span className="slider"></span>
-              </label>
-            </div>
-          </div>
-
-          <div className="divider" />
-
-          {/* Actions */}
-          <div>
-            <button
-              className="btn-primary"
-              onClick={handleSave}
-              style={{ width: '100%', marginBottom: 'var(--base)' }}
-            >
-              Save Changes
-            </button>
-            <button
-              className="btn-ghost"
-              onClick={onLogout}
-              style={{ width: '100%', color: 'var(--gray)', borderColor: 'var(--gray2)' }}
-            >
-              Logout
-            </button>
-          </div>
+          <button className="btn-primary" onClick={() => { onSave({ ...user, name }); onClose(); }} style={{ width: '100%', marginBottom: 'var(--base)' }}>
+            Save
+          </button>
+          <button className="btn-ghost" onClick={onLogout} style={{ width: '100%', color: 'var(--gray)', borderColor: 'var(--gray2)' }}>
+            Logout
+          </button>
         </div>
       </div>
     </div>
@@ -579,314 +907,17 @@ function SettingsModal({ user, onSave, onClose, onLogout }) {
 
 /* ─── ONBOARDING ─── */
 function Onboarding({ onComplete }) {
-  const [step, setStep] = useState(0);
   const [name, setName] = useState('');
-  const [env, setEnv] = useState(null);
-
-  const handleDone = () => {
-    if (!name.trim() || !env) return;
-    onComplete({
-      name: name.trim(),
-      environment: env,
-      autoCamera: true,
-      restTimer: true,
-      soundEffects: true
-    });
-  };
-
-  if (step === 0) {
-    return (
-      <div style={{ maxWidth: 400, margin: '0 auto', padding: 'calc(var(--base) * 10) calc(var(--base) * 3)' }}>
-        <div style={{ marginBottom: 'calc(var(--base) * 6)' }}>
-          <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--gray)', marginBottom: 'var(--base)' }}>
-            Step 1/2
-          </div>
-          <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 'calc(var(--base) * 2)', lineHeight: 1.1 }}>
-            What's your name?
-          </h1>
-        </div>
-        <input
-          className="input"
-          placeholder="ENTER NAME"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && name.trim() && setStep(1)}
-          autoFocus
-          style={{ marginBottom: 'calc(var(--base) * 2)' }}
-        />
-        <button className="btn-primary" onClick={() => setStep(1)} disabled={!name.trim()} style={{ width: '100%' }}>
-          Next
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div style={{ maxWidth: 400, margin: '0 auto', padding: 'calc(var(--base) * 10) calc(var(--base) * 3)' }}>
-      <div style={{ marginBottom: 'calc(var(--base) * 6)' }}>
-        <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--gray)', marginBottom: 'var(--base)' }}>
-          Step 2/2
-        </div>
-        <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 'calc(var(--base) * 2)', lineHeight: 1.1 }}>
-          Training environment?
-        </h1>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--base)', marginBottom: 'calc(var(--base) * 2)' }}>
-        {[
-          { value: 'gym', label: 'GYM', desc: 'Full equipment' },
-          { value: 'home', label: 'HOME', desc: 'Bodyweight only' }
-        ].map(opt => (
-          <button
-            key={opt.value}
-            className="btn-ghost"
-            onClick={() => setEnv(opt.value)}
-            style={{
-              width: '100%',
-              textAlign: 'left',
-              padding: 'calc(var(--base) * 2)',
-              background: env === opt.value ? 'var(--black)' : 'var(--white)',
-              color: env === opt.value ? 'var(--white)' : 'var(--black)',
-              borderColor: 'var(--black)'
-            }}
-          >
-            <div style={{ fontWeight: 700, marginBottom: 4 }}>{opt.label}</div>
-            <div style={{ fontSize: 11, opacity: 0.6 }}>{opt.desc}</div>
-          </button>
-        ))}
-      </div>
-      <button className="btn-primary" onClick={handleDone} disabled={!env} style={{ width: '100%', marginBottom: 'var(--base)' }}>
+      <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 'calc(var(--base) * 6)' }}>Welcome to GymBro</h1>
+      <input className="input" placeholder="Enter your name" value={name} onChange={e => setName(e.target.value)}
+        onKeyDown={e => e.key === 'Enter' && name.trim() && onComplete({ name: name.trim() })}
+        style={{ marginBottom: 'calc(var(--base) * 2)' }} autoFocus />
+      <button className="btn-primary" onClick={() => onComplete({ name: name.trim() })} disabled={!name.trim()} style={{ width: '100%' }}>
         Start
       </button>
-      <button className="btn-ghost" onClick={() => setStep(0)} style={{ width: '100%' }}>
-        Back
-      </button>
-    </div>
-  );
-}
-
-/* ─── WORKOUT DATA ─── */
-const EXERCISES = {
-  gym: [
-    { name: 'Squat', reps: '8-10', rest: 90 },
-    { name: 'Bench Press', reps: '8-10', rest: 90 },
-    { name: 'Deadlift', reps: '6-8', rest: 120 },
-    { name: 'Pull-Up', reps: '6-8', rest: 60 },
-    { name: 'Overhead Press', reps: '8-10', rest: 75 },
-  ],
-  home: [
-    { name: 'Push-Up', reps: '12-15', rest: 60 },
-    { name: 'Bodyweight Squat', reps: '15-20', rest: 60 },
-    { name: 'Plank', reps: '45s', rest: 45 },
-    { name: 'Lunge', reps: '12 each', rest: 60 },
-    { name: 'Pike Push-Up', reps: '10-12', rest: 60 },
-  ]
-};
-
-/* ─── WORKOUT SESSION ─── */
-function WorkoutSession({ user, onComplete }) {
-  const exercises = EXERCISES[user.environment];
-  const [currentEx, setCurrentEx] = useState(0);
-  const [currentSet, setCurrentSet] = useState(0);
-  const [showCamera, setShowCamera] = useState(false);
-  const [completedSets, setCompletedSets] = useState({});
-
-  const ex = exercises[currentEx];
-  const sets = 3;
-  const targetReps = parseInt(ex.reps) || 10;
-
-  const handleSetComplete = () => {
-    const key = `${currentEx}-${currentSet}`;
-    setCompletedSets({ ...completedSets, [key]: true });
-    setShowCamera(false);
-
-    if (currentSet + 1 < sets) {
-      setCurrentSet(currentSet + 1);
-    } else if (currentEx + 1 < exercises.length) {
-      setCurrentEx(currentEx + 1);
-      setCurrentSet(0);
-    } else {
-      onComplete({ completedAt: new Date(), total: exercises.length * sets });
-    }
-  };
-
-  const progress = ((currentEx * sets + currentSet) / (exercises.length * sets)) * 100;
-
-  if (showCamera) {
-    return (
-      <CameraCounter
-        exercise={ex.name}
-        targetReps={targetReps}
-        onComplete={handleSetComplete}
-        onSkip={handleSetComplete}
-      />
-    );
-  }
-
-  return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ borderBottom: '1px solid var(--black)', padding: 'calc(var(--base) * 2) calc(var(--base) * 3)' }}>
-        <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--gray)', marginBottom: 4 }}>
-          Exercise {currentEx + 1}/{exercises.length}
-        </div>
-        <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 'var(--base)' }}>
-          {ex.name}
-        </div>
-        <div style={{ height: 4, background: 'var(--gray2)', overflow: 'hidden', borderRadius: 4 }}>
-          <div style={{ height: '100%', width: `${progress}%`, background: 'var(--black)', transition: 'width 0.3s' }} />
-        </div>
-      </div>
-
-      <div style={{ flex: 1, padding: 'calc(var(--base) * 3)' }}>
-        <div style={{ maxWidth: 400, margin: '0 auto' }}>
-          <div className="card" style={{ marginBottom: 'calc(var(--base) * 3)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'calc(var(--base) * 2)' }}>
-              <div>
-                <div className="label">Set</div>
-                <div style={{ fontSize: 32, fontWeight: 700, lineHeight: 1 }}>{currentSet + 1}/{sets}</div>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <div className="label">Target Reps</div>
-                <div style={{ fontSize: 32, fontWeight: 700, lineHeight: 1 }}>{ex.reps}</div>
-              </div>
-            </div>
-            <div className="divider" />
-            <div>
-              <div className="label">Rest</div>
-              <div style={{ fontSize: 16, fontWeight: 600 }}>{ex.rest}s</div>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: 'var(--base)', marginBottom: 'calc(var(--base) * 4)' }}>
-            {Array.from({ length: sets }).map((_, i) => {
-              const key = `${currentEx}-${i}`;
-              const isDone = completedSets[key];
-              const isCurrent = i === currentSet;
-              return (
-                <div
-                  key={i}
-                  style={{
-                    flex: 1,
-                    height: 8,
-                    background: isDone ? 'var(--black)' : isCurrent ? 'var(--lime)' : 'var(--gray2)',
-                    transition: 'background 0.2s',
-                    borderRadius: 4
-                  }}
-                />
-              );
-            })}
-          </div>
-
-          <button
-            className="btn-primary"
-            onClick={() => setShowCamera(true)}
-            style={{ width: '100%', marginBottom: 'var(--base)', padding: 'calc(var(--base) * 3)' }}
-          >
-            Start Set with Camera
-          </button>
-          <button
-            className="btn-ghost"
-            onClick={handleSetComplete}
-            style={{ width: '100%' }}
-          >
-            Complete Without Camera
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ─── HOME ─── */
-function Home({ user, onStartWorkout, onOpenSettings, history }) {
-  return (
-    <div style={{ minHeight: '100vh', padding: 'calc(var(--base) * 10) calc(var(--base) * 3)' }}>
-      <div style={{ maxWidth: 600, margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'calc(var(--base) * 6)' }}>
-          <div>
-            <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--gray)', marginBottom: 'var(--base)' }}>
-              {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
-            </div>
-            <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 'var(--base)' }}>
-              {user.name}
-            </h1>
-            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5, color: 'var(--gray)' }}>
-              {user.environment === 'gym' ? 'GYM MODE' : 'HOME MODE'}
-            </div>
-          </div>
-          <button className="btn-icon" onClick={onOpenSettings}>
-            ⚙
-          </button>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--base)', marginBottom: 'calc(var(--base) * 4)' }}>
-          {[
-            { label: 'Total', value: history.length },
-            { label: 'This Week', value: history.filter(h => (Date.now() - new Date(h.completedAt)) < 7 * 86400000).length },
-            { label: 'Streak', value: Math.min(history.length, 7) }
-          ].map(stat => (
-            <div key={stat.label} className="card" style={{ textAlign: 'center', padding: 'calc(var(--base) * 2)' }}>
-              <div style={{ fontSize: 24, fontWeight: 700, lineHeight: 1, marginBottom: 4 }}>{stat.value}</div>
-              <div style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: 0.5, color: 'var(--gray)' }}>{stat.label}</div>
-            </div>
-          ))}
-        </div>
-
-        <button
-          className="btn-primary"
-          onClick={onStartWorkout}
-          style={{ width: '100%', padding: 'calc(var(--base) * 4)', fontSize: 14 }}
-        >
-          Start Workout
-        </button>
-
-        {history.length > 0 && (
-          <div style={{ marginTop: 'calc(var(--base) * 6)' }}>
-            <div className="label" style={{ marginBottom: 'calc(var(--base) * 2)' }}>Recent Sessions</div>
-            {history.slice(-5).reverse().map((h, i) => (
-              <div
-                key={i}
-                style={{
-                  borderTop: '1px solid var(--gray2)',
-                  padding: 'calc(var(--base) * 2) 0',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <div>
-                  <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 4 }}>
-                    {new Date(h.completedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                  </div>
-                  <div style={{ fontSize: 10, color: 'var(--gray)' }}>
-                    {h.total} sets completed
-                  </div>
-                </div>
-                <div style={{ fontSize: 20, fontWeight: 700 }}>✓</div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ─── COMPLETION ─── */
-function Completion({ onDone }) {
-  return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'calc(var(--base) * 3)' }}>
-      <div style={{ maxWidth: 400, textAlign: 'center' }}>
-        <div style={{ fontSize: 64, marginBottom: 'calc(var(--base) * 3)' }}>✓</div>
-        <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 'calc(var(--base) * 2)' }}>
-          Session Complete
-        </h1>
-        <p style={{ fontSize: 14, color: 'var(--gray)', marginBottom: 'calc(var(--base) * 4)' }}>
-          Data logged. Come back tomorrow.
-        </p>
-        <button className="btn-primary" onClick={onDone} style={{ width: '100%' }}>
-          Done
-        </button>
-      </div>
     </div>
   );
 }
@@ -894,82 +925,81 @@ function Completion({ onDone }) {
 /* ─── ROOT ─── */
 export default function GymBro() {
   const [user, setUser] = useState(() => {
-    try {
-      const s = localStorage.getItem('gymbro_user');
-      return s ? JSON.parse(s) : null;
-    } catch {
-      return null;
-    }
+    try { return JSON.parse(localStorage.getItem('gymbro_user')); } catch { return null; }
+  });
+
+  const [program, setProgram] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('gymbro_program')); } catch { return null; }
   });
 
   const [history, setHistory] = useState(() => {
-    try {
-      const s = localStorage.getItem('gymbro_history');
-      return s ? JSON.parse(s) : [];
-    } catch {
-      return [];
-    }
+    try { return JSON.parse(localStorage.getItem('gymbro_history')) || []; } catch { return []; }
   });
 
-  const [screen, setScreen] = useState('home');
+  const [tab, setTab] = useState('home');
+  const [activeWorkout, setActiveWorkout] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
 
-  const handleOnboard = (userData) => {
-    localStorage.setItem('gymbro_user', JSON.stringify(userData));
-    setUser(userData);
+  const handleOnboard = (u) => {
+    localStorage.setItem('gymbro_user', JSON.stringify(u));
+    setUser(u);
   };
 
-  const handleComplete = (session) => {
+  const handleSaveProgram = (p) => {
+    localStorage.setItem('gymbro_program', JSON.stringify(p));
+    setProgram(p);
+  };
+
+  const handleCompleteWorkout = (session) => {
     const newHistory = [...history, session];
     localStorage.setItem('gymbro_history', JSON.stringify(newHistory));
     setHistory(newHistory);
-    setScreen('complete');
-  };
-
-  const handleSaveSettings = (updatedUser) => {
-    localStorage.setItem('gymbro_user', JSON.stringify(updatedUser));
-    setUser(updatedUser);
-    setShowSettings(false);
+    setActiveWorkout(null);
+    setTab('home');
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('gymbro_user');
-    localStorage.removeItem('gymbro_history');
+    localStorage.clear();
     setUser(null);
+    setProgram(null);
     setHistory([]);
     setShowSettings(false);
   };
 
-  if (!user) {
-    return (
-      <>
-        <style>{CSS}</style>
-        <Onboarding onComplete={handleOnboard} />
-      </>
-    );
-  }
+  if (!user) return (
+    <>
+      <style>{CSS}</style>
+      <Onboarding onComplete={handleOnboard} />
+    </>
+  );
+
+  if (activeWorkout) return (
+    <>
+      <style>{CSS}</style>
+      <ActiveWorkout workout={activeWorkout} onComplete={handleCompleteWorkout} />
+    </>
+  );
 
   return (
     <>
       <style>{CSS}</style>
-      {showSettings && (
-        <SettingsModal
-          user={user}
-          onSave={handleSaveSettings}
-          onClose={() => setShowSettings(false)}
-          onLogout={handleLogout}
-        />
-      )}
-      {screen === 'home' && (
-        <Home
-          user={user}
-          onStartWorkout={() => setScreen('workout')}
-          onOpenSettings={() => setShowSettings(true)}
-          history={history}
-        />
-      )}
-      {screen === 'workout' && <WorkoutSession user={user} onComplete={handleComplete} />}
-      {screen === 'complete' && <Completion onDone={() => setScreen('home')} />}
+      {showSettings && <SettingsModal user={user} onSave={u => { localStorage.setItem('gymbro_user', JSON.stringify(u)); setUser(u); }} onClose={() => setShowSettings(false)} onLogout={handleLogout} />}
+      {tab === 'home' && <Home user={user} history={history} onOpenSettings={() => setShowSettings(true)} />}
+      {tab === 'schedule' && <ScheduleScreen program={program} onStartWorkout={w => setActiveWorkout(w)} />}
+      {tab === 'plan' && <PlanScreen program={program} onSaveProgram={handleSaveProgram} />}
+
+      <div className="tab-bar">
+        {[
+          { id: 'home', icon: '🏠', label: 'Home' },
+          { id: 'schedule', icon: '📅', label: 'Schedule' },
+          { id: 'plan', icon: '📋', label: 'Plan' }
+        ].map(t => (
+          <button key={t.id} className={`tab-btn ${tab === t.id ? 'active' : ''}`} onClick={() => setTab(t.id)}>
+            <div>{t.icon}</div>
+            <div className="tab-label">{t.label}</div>
+          </button>
+        ))}
+      </div>
     </>
   );
 }
