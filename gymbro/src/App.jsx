@@ -11,9 +11,11 @@ const CSS = `
     --white:  #fafafa;
     --gray:   #666666;
     --gray2:  #cccccc;
+    --gray3:  #f0f0f0;
     --lime:   #d0ff00;
     --font:   'IBM Plex Mono', monospace;
     --base:   8px;
+    --radius: 12px;
   }
   
   html { overflow-y: scroll; }
@@ -33,7 +35,7 @@ const CSS = `
     background: none;
   }
   
-  input {
+  input, select {
     font-family: var(--font);
     border: none;
     outline: none;
@@ -47,10 +49,12 @@ const CSS = `
     letter-spacing: 0.5px;
     padding: calc(var(--base) * 2) calc(var(--base) * 3);
     font-size: 12px;
-    transition: background 0.15s;
+    border-radius: var(--radius);
+    transition: all 0.15s;
   }
-  .btn-primary:hover { background: #1a1a1a; }
-  .btn-primary:active { background: #000; }
+  .btn-primary:hover { background: #1a1a1a; transform: translateY(-1px); }
+  .btn-primary:active { background: #000; transform: translateY(0); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
   
   .btn-ghost {
     background: var(--white);
@@ -61,10 +65,26 @@ const CSS = `
     letter-spacing: 0.5px;
     padding: calc(var(--base) * 2) calc(var(--base) * 3);
     font-size: 12px;
-    transition: background 0.1s;
+    border-radius: var(--radius);
+    transition: all 0.1s;
   }
   .btn-ghost:hover { background: #f0f0f0; }
   .btn-ghost:active { background: #e8e8e8; }
+  
+  .btn-icon {
+    background: var(--white);
+    border: 1px solid var(--black);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.1s;
+  }
+  .btn-icon:hover { background: var(--gray3); }
+  .btn-icon:active { background: var(--gray2); }
   
   .input {
     width: 100%;
@@ -73,9 +93,22 @@ const CSS = `
     padding: calc(var(--base) * 2);
     font-size: 14px;
     font-weight: 500;
+    border-radius: var(--radius);
   }
   .input::placeholder { color: var(--gray); }
-  .input:focus { border-color: var(--lime); }
+  .input:focus { border-color: var(--lime); box-shadow: 0 0 0 2px rgba(208, 255, 0, 0.1); }
+  
+  .select {
+    width: 100%;
+    background: var(--white);
+    border: 1px solid var(--black);
+    padding: calc(var(--base) * 2);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  .select:focus { border-color: var(--lime); box-shadow: 0 0 0 2px rgba(208, 255, 0, 0.1); }
   
   .label {
     font-size: 10px;
@@ -91,12 +124,89 @@ const CSS = `
     border: 1px solid var(--black);
     background: var(--white);
     padding: calc(var(--base) * 3);
+    border-radius: var(--radius);
   }
   
   .divider {
     height: 1px;
     background: var(--gray2);
     margin: calc(var(--base) * 3) 0;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--base) * 3);
+    animation: fadeIn 0.2s ease;
+  }
+
+  .modal {
+    background: var(--white);
+    border: 1px solid var(--black);
+    border-radius: calc(var(--radius) * 2);
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: var(--gray2);
+    transition: 0.2s;
+    border-radius: 24px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.2s;
+    border-radius: 50%;
+  }
+
+  input:checked + .slider {
+    background-color: var(--lime);
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(24px);
   }
 `;
 
@@ -107,7 +217,7 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
   const [isTracking, setIsTracking] = useState(false);
   const [error, setError] = useState(null);
   const [lastY, setLastY] = useState(null);
-  const [direction, setDirection] = useState(null); // 'up' or 'down'
+  const [direction, setDirection] = useState(null);
   const animationRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -177,28 +287,25 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
   };
 
   const calculateMotion = (prev, curr) => {
-    let totalMotion = 0;
     let yWeightedSum = 0;
     let motionPixels = 0;
 
-    // Sample every 4th pixel for performance
     for (let i = 0; i < prev.length; i += 16) {
       const diff = Math.abs(prev[i] - curr[i]) +
                    Math.abs(prev[i+1] - curr[i+1]) +
                    Math.abs(prev[i+2] - curr[i+2]);
       
-      if (diff > 30) { // motion threshold
+      if (diff > 30) {
         const pixelIndex = i / 4;
         const y = Math.floor(pixelIndex / canvasRef.current.width);
         yWeightedSum += y;
         motionPixels++;
-        totalMotion += diff;
       }
     }
 
-    if (motionPixels > 100) { // minimum motion pixels
+    if (motionPixels > 100) {
       const avgY = yWeightedSum / motionPixels;
-      return { intensity: totalMotion, y: avgY };
+      return { y: avgY };
     }
     return null;
   };
@@ -206,7 +313,7 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
   const updateRepCount = (motion) => {
     if (!motion) return;
 
-    const THRESHOLD = 20; // pixels moved to count as direction change
+    const THRESHOLD = 20;
 
     if (lastY !== null) {
       const delta = motion.y - lastY;
@@ -214,7 +321,6 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
       if (Math.abs(delta) > THRESHOLD) {
         const newDirection = delta < 0 ? 'up' : 'down';
         
-        // Rep counted on downward motion after upward motion (one complete cycle)
         if (direction === 'up' && newDirection === 'down') {
           setReps(r => {
             const newReps = r + 1;
@@ -240,7 +346,6 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
       background: 'var(--black)', color: 'var(--white)',
       display: 'flex', flexDirection: 'column'
     }}>
-      {/* Video feed */}
       <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
         <video
           ref={videoRef}
@@ -251,12 +356,11 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            transform: 'scaleX(-1)' // mirror
+            transform: 'scaleX(-1)'
           }}
         />
         <canvas ref={canvasRef} style={{ display: 'none' }} />
         
-        {/* Overlay UI */}
         <div style={{
           position: 'absolute', inset: 0,
           display: 'flex', flexDirection: 'column',
@@ -264,7 +368,6 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
           padding: 'calc(var(--base) * 4)',
           background: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.6) 100%)'
         }}>
-          {/* Top info */}
           <div>
             <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4, opacity: 0.7 }}>
               {exercise}
@@ -279,10 +382,8 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
             )}
           </div>
 
-          {/* Bottom controls */}
           <div>
-            {/* Progress bar */}
-            <div style={{ height: 4, background: 'rgba(255,255,255,0.2)', marginBottom: 'calc(var(--base) * 2)', overflow: 'hidden' }}>
+            <div style={{ height: 4, background: 'rgba(255,255,255,0.2)', marginBottom: 'calc(var(--base) * 2)', overflow: 'hidden', borderRadius: 4 }}>
               <div style={{
                 height: '100%',
                 width: `${progress * 100}%`,
@@ -303,7 +404,8 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
                   fontSize: 12,
                   fontWeight: 600,
                   textTransform: 'uppercase',
-                  letterSpacing: 0.5
+                  letterSpacing: 0.5,
+                  borderRadius: 'var(--radius)'
                 }}
               >
                 Skip
@@ -320,7 +422,8 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
                     fontSize: 12,
                     fontWeight: 700,
                     textTransform: 'uppercase',
-                    letterSpacing: 0.5
+                    letterSpacing: 0.5,
+                    borderRadius: 'var(--radius)'
                   }}
                 >
                   Complete Set
@@ -340,7 +443,8 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
             border: '1px solid var(--lime)',
             padding: 'calc(var(--base) * 3)',
             maxWidth: 300,
-            textAlign: 'center'
+            textAlign: 'center',
+            borderRadius: 'calc(var(--radius) * 2)'
           }}>
             <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 'var(--base)', color: 'var(--lime)' }}>
               CAMERA ERROR
@@ -358,6 +462,121 @@ function CameraCounter({ exercise, targetReps, onComplete, onSkip }) {
   );
 }
 
+/* ─── SETTINGS MODAL ─── */
+function SettingsModal({ user, onSave, onClose, onLogout }) {
+  const [name, setName] = useState(user.name);
+  const [env, setEnv] = useState(user.environment);
+  const [autoCamera, setAutoCamera] = useState(user.autoCamera !== false);
+  const [restTimer, setRestTimer] = useState(user.restTimer !== false);
+  const [soundEffects, setSoundEffects] = useState(user.soundEffects !== false);
+
+  const handleSave = () => {
+    onSave({
+      ...user,
+      name: name.trim(),
+      environment: env,
+      autoCamera,
+      restTimer,
+      soundEffects
+    });
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={e => e.stopPropagation()}>
+        <div style={{ padding: 'calc(var(--base) * 4)', borderBottom: '1px solid var(--gray2)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h2 style={{ fontSize: 20, fontWeight: 700 }}>Settings</h2>
+            <button className="btn-icon" onClick={onClose} style={{ border: 'none' }}>✕</button>
+          </div>
+        </div>
+
+        <div style={{ padding: 'calc(var(--base) * 4)' }}>
+          {/* Profile */}
+          <div style={{ marginBottom: 'calc(var(--base) * 4)' }}>
+            <div className="label">Profile</div>
+            <div style={{ marginBottom: 'calc(var(--base) * 2)' }}>
+              <label className="label" style={{ fontSize: 9 }}>Name</label>
+              <input
+                className="input"
+                value={name}
+                onChange={e => setName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="label" style={{ fontSize: 9 }}>Environment</label>
+              <select className="select" value={env} onChange={e => setEnv(e.target.value)}>
+                <option value="gym">GYM - Full equipment</option>
+                <option value="home">HOME - Bodyweight only</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="divider" />
+
+          {/* Preferences */}
+          <div style={{ marginBottom: 'calc(var(--base) * 4)' }}>
+            <div className="label">Preferences</div>
+            
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'calc(var(--base) * 2)' }}>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 4 }}>Auto-start Camera</div>
+                <div style={{ fontSize: 10, color: 'var(--gray)' }}>Launch camera by default</div>
+              </div>
+              <label className="switch">
+                <input type="checkbox" checked={autoCamera} onChange={e => setAutoCamera(e.target.checked)} />
+                <span className="slider"></span>
+              </label>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'calc(var(--base) * 2)' }}>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 4 }}>Rest Timer</div>
+                <div style={{ fontSize: 10, color: 'var(--gray)' }}>Show countdown between sets</div>
+              </div>
+              <label className="switch">
+                <input type="checkbox" checked={restTimer} onChange={e => setRestTimer(e.target.checked)} />
+                <span className="slider"></span>
+              </label>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 4 }}>Sound Effects</div>
+                <div style={{ fontSize: 10, color: 'var(--gray)' }}>Audio feedback on rep count</div>
+              </div>
+              <label className="switch">
+                <input type="checkbox" checked={soundEffects} onChange={e => setSoundEffects(e.target.checked)} />
+                <span className="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div className="divider" />
+
+          {/* Actions */}
+          <div>
+            <button
+              className="btn-primary"
+              onClick={handleSave}
+              style={{ width: '100%', marginBottom: 'var(--base)' }}
+            >
+              Save Changes
+            </button>
+            <button
+              className="btn-ghost"
+              onClick={onLogout}
+              style={{ width: '100%', color: 'var(--gray)', borderColor: 'var(--gray2)' }}
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── ONBOARDING ─── */
 function Onboarding({ onComplete }) {
   const [step, setStep] = useState(0);
@@ -366,7 +585,13 @@ function Onboarding({ onComplete }) {
 
   const handleDone = () => {
     if (!name.trim() || !env) return;
-    onComplete({ name: name.trim(), environment: env });
+    onComplete({
+      name: name.trim(),
+      environment: env,
+      autoCamera: true,
+      restTimer: true,
+      soundEffects: true
+    });
   };
 
   if (step === 0) {
@@ -499,7 +724,6 @@ function WorkoutSession({ user, onComplete }) {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Header */}
       <div style={{ borderBottom: '1px solid var(--black)', padding: 'calc(var(--base) * 2) calc(var(--base) * 3)' }}>
         <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--gray)', marginBottom: 4 }}>
           Exercise {currentEx + 1}/{exercises.length}
@@ -507,15 +731,13 @@ function WorkoutSession({ user, onComplete }) {
         <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 'var(--base)' }}>
           {ex.name}
         </div>
-        <div style={{ height: 4, background: 'var(--gray2)', overflow: 'hidden' }}>
+        <div style={{ height: 4, background: 'var(--gray2)', overflow: 'hidden', borderRadius: 4 }}>
           <div style={{ height: '100%', width: `${progress}%`, background: 'var(--black)', transition: 'width 0.3s' }} />
         </div>
       </div>
 
-      {/* Content */}
       <div style={{ flex: 1, padding: 'calc(var(--base) * 3)' }}>
         <div style={{ maxWidth: 400, margin: '0 auto' }}>
-          {/* Set info */}
           <div className="card" style={{ marginBottom: 'calc(var(--base) * 3)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'calc(var(--base) * 2)' }}>
               <div>
@@ -534,7 +756,6 @@ function WorkoutSession({ user, onComplete }) {
             </div>
           </div>
 
-          {/* Set dots */}
           <div style={{ display: 'flex', gap: 'var(--base)', marginBottom: 'calc(var(--base) * 4)' }}>
             {Array.from({ length: sets }).map((_, i) => {
               const key = `${currentEx}-${i}`;
@@ -547,14 +768,14 @@ function WorkoutSession({ user, onComplete }) {
                     flex: 1,
                     height: 8,
                     background: isDone ? 'var(--black)' : isCurrent ? 'var(--lime)' : 'var(--gray2)',
-                    transition: 'background 0.2s'
+                    transition: 'background 0.2s',
+                    borderRadius: 4
                   }}
                 />
               );
             })}
           </div>
 
-          {/* Actions */}
           <button
             className="btn-primary"
             onClick={() => setShowCamera(true)}
@@ -576,24 +797,27 @@ function WorkoutSession({ user, onComplete }) {
 }
 
 /* ─── HOME ─── */
-function Home({ user, onStartWorkout, history }) {
+function Home({ user, onStartWorkout, onOpenSettings, history }) {
   return (
     <div style={{ minHeight: '100vh', padding: 'calc(var(--base) * 10) calc(var(--base) * 3)' }}>
       <div style={{ maxWidth: 600, margin: '0 auto' }}>
-        {/* Header */}
-        <div style={{ marginBottom: 'calc(var(--base) * 6)' }}>
-          <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--gray)', marginBottom: 'var(--base)' }}>
-            {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'calc(var(--base) * 6)' }}>
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--gray)', marginBottom: 'var(--base)' }}>
+              {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+            </div>
+            <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 'var(--base)' }}>
+              {user.name}
+            </h1>
+            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5, color: 'var(--gray)' }}>
+              {user.environment === 'gym' ? 'GYM MODE' : 'HOME MODE'}
+            </div>
           </div>
-          <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 'var(--base)' }}>
-            {user.name}
-          </h1>
-          <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5, color: 'var(--gray)' }}>
-            {user.environment === 'gym' ? 'GYM MODE' : 'HOME MODE'}
-          </div>
+          <button className="btn-icon" onClick={onOpenSettings}>
+            ⚙
+          </button>
         </div>
 
-        {/* Stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--base)', marginBottom: 'calc(var(--base) * 4)' }}>
           {[
             { label: 'Total', value: history.length },
@@ -607,7 +831,6 @@ function Home({ user, onStartWorkout, history }) {
           ))}
         </div>
 
-        {/* CTA */}
         <button
           className="btn-primary"
           onClick={onStartWorkout}
@@ -616,7 +839,6 @@ function Home({ user, onStartWorkout, history }) {
           Start Workout
         </button>
 
-        {/* History */}
         {history.length > 0 && (
           <div style={{ marginTop: 'calc(var(--base) * 6)' }}>
             <div className="label" style={{ marginBottom: 'calc(var(--base) * 2)' }}>Recent Sessions</div>
@@ -689,7 +911,8 @@ export default function GymBro() {
     }
   });
 
-  const [screen, setScreen] = useState('home'); // home | workout | complete
+  const [screen, setScreen] = useState('home');
+  const [showSettings, setShowSettings] = useState(false);
 
   const handleOnboard = (userData) => {
     localStorage.setItem('gymbro_user', JSON.stringify(userData));
@@ -701,6 +924,20 @@ export default function GymBro() {
     localStorage.setItem('gymbro_history', JSON.stringify(newHistory));
     setHistory(newHistory);
     setScreen('complete');
+  };
+
+  const handleSaveSettings = (updatedUser) => {
+    localStorage.setItem('gymbro_user', JSON.stringify(updatedUser));
+    setUser(updatedUser);
+    setShowSettings(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('gymbro_user');
+    localStorage.removeItem('gymbro_history');
+    setUser(null);
+    setHistory([]);
+    setShowSettings(false);
   };
 
   if (!user) {
@@ -715,7 +952,22 @@ export default function GymBro() {
   return (
     <>
       <style>{CSS}</style>
-      {screen === 'home' && <Home user={user} onStartWorkout={() => setScreen('workout')} history={history} />}
+      {showSettings && (
+        <SettingsModal
+          user={user}
+          onSave={handleSaveSettings}
+          onClose={() => setShowSettings(false)}
+          onLogout={handleLogout}
+        />
+      )}
+      {screen === 'home' && (
+        <Home
+          user={user}
+          onStartWorkout={() => setScreen('workout')}
+          onOpenSettings={() => setShowSettings(true)}
+          history={history}
+        />
+      )}
       {screen === 'workout' && <WorkoutSession user={user} onComplete={handleComplete} />}
       {screen === 'complete' && <Completion onDone={() => setScreen('home')} />}
     </>
