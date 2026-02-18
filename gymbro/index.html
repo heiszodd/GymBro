@@ -190,9 +190,11 @@
     }
 
     /* ── PHONE MOCKUP ── */
-    .hero-phone {
+    #root {
       position: relative; z-index: 1; margin-top: 64px;
       opacity: 0; animation: revealUp 1s 0.8s ease forwards;
+      width: 260px;
+      height: 520px;
     }
     .phone-frame {
       width: 260px; height: 520px; border-radius: 44px;
@@ -493,7 +495,7 @@
       <a href="#how">How it works</a>
       <a href="#testimonials">Reviews</a>
     </div>
-    <a href="app.html" class="nav-cta">Get Started Free</a>
+    <a href="#root" class="nav-cta">Get Started Free</a>
   </nav>
 
   <!-- HERO -->
@@ -516,50 +518,11 @@
     </p>
 
     <div class="hero-btns">
-      <a href="app.html" class="btn-primary">Start Training Free →</a>
+      <a href="#root" class="btn-primary">Start Training Free →</a>
       <a href="#how" class="btn-ghost">See How It Works</a>
     </div>
 
-    <div class="hero-phone">
-      <div class="phone-frame" style="animation: float 6s ease-in-out infinite;">
-        <div class="phone-screen">
-          <div class="phone-notch"></div>
-          <div class="phone-content">
-            <div class="phone-header">
-              <span class="phone-logo">GymBro</span>
-              <div class="phone-avatar">A</div>
-            </div>
-            <div class="phone-greeting">Good morning,</div>
-            <div class="phone-name">Alex 🔥</div>
-            <div class="phone-stats">
-              <div class="phone-stat">
-                <div class="phone-stat-val">12</div>
-                <div class="phone-stat-label">Workouts</div>
-              </div>
-              <div class="phone-stat">
-                <div class="phone-stat-val">3</div>
-                <div class="phone-stat-label">This Week</div>
-              </div>
-              <div class="phone-stat">
-                <div class="phone-stat-val" style="color:#ffaa44;">5🔥</div>
-                <div class="phone-stat-label">Streak</div>
-              </div>
-            </div>
-            <div class="phone-card">
-              <div class="phone-card-tag">Ready to Go ✓</div>
-              <div class="phone-card-title">Full Body Program</div>
-              <button class="phone-card-btn">Start Session →</button>
-            </div>
-          </div>
-          <div class="phone-tabbar">
-            <div class="phone-tab">⚡</div>
-            <div class="phone-tab">✦</div>
-            <div class="phone-tab" style="color:#1db37e;">🔥</div>
-            <div class="phone-tab">📈</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="root"></div>
 
     <div class="hero-scroll-hint">
       <div class="scroll-line"></div>
@@ -719,7 +682,7 @@
       Join thousands of athletes already training smarter with GymBro. It's free to start.
     </p>
     <div class="cta-btns reveal reveal-delay-2">
-      <a href="app.html" class="btn-primary">Start Training Free →</a>
+      <a href="#root" class="btn-primary">Start Training Free →</a>
       <a href="#features" class="btn-ghost">Learn More</a>
     </div>
   </section>
@@ -738,6 +701,7 @@
     </div>
   </footer>
 
+  <script type="module" src="/src/main.jsx"></script>
   <script>
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
